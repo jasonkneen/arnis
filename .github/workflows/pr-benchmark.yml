@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@v1
@@ -87,6 +87,8 @@ jobs:
             mem_annotation=" (↗ ${mem_percent}% more)"
           fi
 
+          benchmark_time=$(date -u "+%Y-%m-%d %H:%M:%S UTC")
+
           {
             echo "summary<<EOF"
             echo "⏱️ Benchmark run finished in **${minutes}m ${seconds}s**"
@@ -97,6 +99,8 @@ jobs:
             echo "🔢 Commit: [\`${GITHUB_SHA:0:7}\`](https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA})"
             echo ""
             echo "${verdict}"
+            echo ""
+            echo "📅 **Last benchmark:** ${benchmark_time}"
             echo ""
             echo "_You can retrigger the benchmark by commenting \`retrigger-benchmark\`._"
             echo "EOF"
